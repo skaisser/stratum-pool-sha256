@@ -1,10 +1,8 @@
-## This repo is looking for maintainers! Please reach out if interested.
+# node-stratum-pool
 
---------
+High performance Stratum poolserver in Node.js optimized for Bitcoin Cash with ASICBoost support.
 
-
-High performance Stratum poolserver in Node.js. One instance of this software can startup and manage multiple coin
-pools, each with their own daemon and stratum port :)
+This is a fork of the original [node-stratum-pool](https://github.com/zone117x/node-stratum-pool) with modern improvements and security fixes.
 
 #### Notice
 This is a module for Node.js that will do nothing on its own. Unless you're a Node.js developer who would like to
@@ -14,10 +12,46 @@ handles payments, website front-end, database layer, mutli-coin/pool support, au
 etc.. The portal also has an [MPOS](https://github.com/MPOS/php-mpos) compatibility mode so that the it can function as
 a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expert/stratum-mining).
 
+## Key Improvements in this Fork
 
-[![Build Status](https://travis-ci.org/zone117x/node-stratum-pool.png?branch=master)](https://travis-ci.org/zone117x/node-stratum-pool)
+### 🔒 Security
+- **Zero vulnerabilities** - All security issues fixed
+- Replaced vulnerable `bignum` package with native JavaScript BigInt
+- Replaced `base58-native` with pure JavaScript `bs58` (no compilation needed)
+- Updated all dependencies to latest secure versions
+- Minimum Node.js version: 18.0.0
 
-[![NPM](https://nodei.co/npm/stratum-pool.png?downloads=true&stars=true)](https://nodei.co/npm/stratum-pool/)
+### ⚡ ASICBoost Support
+- Full BIP320 version rolling implementation
+- Supports modern ASIC miners with up to 20% power efficiency improvement
+- Version range: `0x20000000` to `0x3FFFFFFF`
+- Version mask: `0x1fffe000`
+- Extended mining.submit with 6th parameter for version
+
+**Configuration Example for Bitcoin Cash:**
+```javascript
+var myCoin = {
+    "name": "BitcoinCash",
+    "symbol": "BCH",
+    "algorithm": "sha256",
+    "asicboost": true,  // Enable ASICBoost support
+    "peerMagic": "e3e1f3e8",
+    "peerMagicTestnet": "f4e5f3f4"
+};
+```
+
+### 🚀 Performance
+- Native BigInt for all large number calculations
+- No native dependencies = faster installation
+- Optimized for SHA256 (Bitcoin Cash)
+- Compatible with Node.js 18+ on all platforms
+
+### 🎯 Solo Pool Optimizations
+This fork is optimized for solo pool operations. For a complete solo pool setup, see [NOMP-BCH](https://github.com/skaisser/nomp-bch) which includes:
+- Lightweight API server (no Express dependency)
+- Simplified initialization without profit switching
+- Minimal dependencies for better performance
+- Pre-configured for Bitcoin Cash solo mining
 
 #### Why
 This server was built to be more efficient and easier to setup, maintain and scale than existing stratum poolservers
@@ -41,6 +75,7 @@ Features
 * Transaction messages support
 * Vardiff (variable difficulty / share limiter)
 * When started with a coin deamon that hasn't finished syncing to the network it shows the blockchain download progress and initializes once synced
+* __ASICBoost__ support for version rolling (up to 20% efficiency improvement)
 
 #### Hashing algorithms supported:
 * ✓ __SHA256__ (Bitcoin, Freicoin, Peercoin/PPCoin, Terracoin, etc..)
@@ -72,9 +107,43 @@ Not working currently:
 
 Requirements
 ------------
-* node v0.10+
+* node v18.0+
 * coin daemon (preferably one with a relatively updated API and not some crapcoin :p)
 
+Technical Details
+-----------------
+### BigInt Compatibility Layer
+The `bignum` package has been completely replaced with a custom BigInt compatibility layer (`lib/bignum-compat.js`) that provides:
+- Drop-in replacement for all bignum operations
+- Native JavaScript BigInt performance
+- No compilation required
+- Full compatibility with existing code
+
+### ASICBoost Implementation
+Version rolling support has been added to:
+- `lib/blockTemplate.js` - Version mask and range configuration
+- `lib/jobManager.js` - Version parameter validation in share processing
+- `lib/stratum.js` - Extended mining.submit with 6th parameter
+- `lib/pool.js` - Version parameter passed through to job manager
+
+### Pure JavaScript Dependencies
+All native dependencies have been replaced:
+- `bignum` → Native BigInt with compatibility layer
+- `base58-native` → `bs58` (pure JavaScript)
+- Result: No compilation errors, works on all platforms
+
+Installation
+------------
+```bash
+npm install git+https://github.com/skaisser/node-stratum-pool.git
+```
+
+Or add to your `package.json`:
+```json
+"dependencies": {
+    "stratum-pool": "https://github.com/skaisser/node-stratum-pool.git"
+}
+```
 
 Example Usage
 -------------
@@ -366,6 +435,17 @@ Credits
 * [ahmedbodi](//github.com/ahmedbodi/stratum-mining) - more algo adaptions to python code
 * [steveshit](//github.com/steveshit) - ported X11 hashing algo from python to node module
 
+
+Changelog
+---------
+### v2.0.0 (This Fork)
+- Replaced all vulnerable dependencies
+- Added full ASICBoost/version rolling support
+- Replaced bignum with native BigInt compatibility layer
+- Replaced base58-native with pure JavaScript bs58
+- Updated to Node.js 18+ minimum
+- Optimized for solo pool operations
+- Zero security vulnerabilities
 
 Donations
 ---------
