@@ -30,6 +30,7 @@
     "dependencies": {
         "multi-hashing": "https://github.com/skaisser/node-multi-hashing.git",
         "bs58": "^5.0.0",
+        "bchaddrjs": "^0.5.2",
         "async": "^3.2.5"
     },
     "engines": {
