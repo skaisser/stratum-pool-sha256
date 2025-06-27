@@ -52,6 +52,15 @@ This fork is optimized for solo pool operations. For a complete solo pool setup,
 - Simplified initialization without profit switching
 - Minimal dependencies for better performance
 - Pre-configured for Bitcoin Cash solo mining
+- Per-miner coinbase signatures (shows "Mined by [username]" in blockchain)
+
+### 💰 Bitcoin Cash Address Support
+Full support for both address formats:
+- **Legacy addresses** (e.g., `1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa`)
+- **CashAddr format** (e.g., `bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a`)
+- Automatic conversion between formats
+- Pool configuration accepts either format
+- Payments generated in matching format
 
 #### Why
 This server was built to be more efficient and easier to setup, maintain and scale than existing stratum poolservers
