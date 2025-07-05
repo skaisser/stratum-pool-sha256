@@ -566,6 +566,4 @@ To support development of this project feel free to donate :)
 
 License
 -------
-Released under the GNU General Public License v2
-
-http://www.gnu.org/licenses/gpl-2.0.html
+Released under the MIT License. See [LICENSE](LICENSE) file for details.

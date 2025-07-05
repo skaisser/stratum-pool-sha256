@@ -21,7 +21,7 @@
     "bugs": {
         "url": "https://github.com/skaisser/node-stratum-pool/issues"
     },
-    "license": "GPL-2.0",
+    "license": "MIT",
     "author": "Shirleyson Kaisser <skaisser@gmail.com>",
     "contributors": [
         "Matthew Little (original author)",
