@@ -30,19 +30,18 @@ a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expe
 - **Comprehensive JSDoc documentation** - Full IDE support with type definitions
 
 ### 🧪 Test Suite & Quality
-- **55+ comprehensive unit tests** using Jest
-- **Full test coverage** for all critical components
+- **129+ comprehensive unit tests** using Jest
+- **30%+ test coverage** with focus on critical components
 - **Mocked dependencies** for reliable testing
 - **CI/CD ready** - Tests run on every commit
-- **Test categories**:
-  - Pool initialization and configuration
-  - Stratum protocol implementation
-  - Share validation and difficulty calculations
-  - Block template generation
-  - Transaction building
-  - Variable difficulty adjustments
-  - BigInt compatibility layer
-  - Algorithm properties
+- **Test coverage highlights**:
+  - bignum-compat.js: 96% coverage
+  - blockTemplate.js: 78% coverage
+  - merkleTree.js: 73% coverage
+  - util.js: 69% coverage
+  - transactions.js: 60% coverage
+  - jobManager.js: 51% coverage
+  - Full test suites for varDiff, algoProperties, and more
 
 ### ⚡ ASICBoost Support
 - Full BIP320 version rolling implementation
@@ -530,8 +529,8 @@ Changelog
   - No compilation required on any platform
 
 - **Testing & Quality**
-  - Added comprehensive Jest test suite (55+ tests)
-  - Full test coverage for all components
+  - Added comprehensive Jest test suite (129+ tests)
+  - 30%+ test coverage focusing on critical components
   - Added ESLint and Prettier configuration
   - Added Husky pre-commit hooks
   - Comprehensive JSDoc documentation
