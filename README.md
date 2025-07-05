@@ -120,31 +120,30 @@ Features
 * __ASICBoost__ support for version rolling (up to 20% efficiency improvement)
 
 #### Hashing algorithms supported:
-* ✓ __SHA256__ (Bitcoin, Freicoin, Peercoin/PPCoin, Terracoin, etc..)
-* ✓ __Scrypt__ (Litecoin, Dogecoin, Feathercoin, etc..)
-* ✓ __Scrypt-Jane__ (YaCoin, CopperBars, Pennies, Tickets, etc..)
-* ✓ __Scrypt-N__ (Vertcoin [VTC])
+* ✓ __SHA256__ (Bitcoin [BTC], Bitcoin Cash [BCH], Bitcoin SV [BSV], Namecoin [NMC], Peercoin [PPC], and other SHA256 coins)
+* ✓ __SHA256 with ASICBoost__ (Bitcoin Cash [BCH], Bitcoin [BTC] - with version rolling support)
+* ✓ __Scrypt__ (Litecoin [LTC], Dogecoin [DOGE], Feathercoin [FTC], and other Scrypt coins)
+* ✓ __Scrypt-OG__ (Aiden [ADN] and other low N-factor Scrypt coins)
+* ✓ __Scrypt-Jane__ (YaCoin [YAC], CopperBars [CPR], Pennies [CENT], Tickets [TIX])
+* ✓ __Scrypt-N__ (Vertcoin [VTC], Execoin [EXE], and other adaptive N-factor coins)
+* ✓ __X11__ (Dash [DASH], formerly Darkcoin)
+* ✓ __X13__ (MaruCoin [MARU], BoostCoin [BOST])
+* ✓ __X15__ (HTML5Coin [HTML5])
+* ✓ __X16R__ (Ravencoin [RVN])
+* ✓ __X16RV2__ (Ravencoin [RVN] - new algorithm version)
+* ✓ __C11__ (Chaincoin [CHC])
 * ✓ __Quark__ (Quarkcoin [QRK])
-* ✓ __X11__ (Darkcoin [DRK], Hirocoin, Limecoin)
-* ✓ __X13__ (MaruCoin, BoostCoin)
-* ✓ __X16R__ (PexaCoin, RavenCoin)
-* ✓ __X16RV2__ (PexaCoin, RavenCoin)
-* ✓ __NIST5__ (Talkcoin)
-* ✓ __Keccak__ (Maxcoin [MAX], HelixCoin, CryptoMeth, Galleon, 365coin, Slothcoin, BitcointalkCoin)
-* ✓ __Skein__ (Skeincoin [SKC])
-* ✓ __Groestl__ (Groestlcoin [GRS])
-
-May be working (needs additional testing):
-* ? *Blake* (Blakecoin [BLC])
-* ? *Fugue* (Fuguecoin [FC])
-* ? *Qubit* (Qubitcoin [Q2C], Myriadcoin [MYR])
-* ? *SHAvite-3* (INKcoin [INK])
-* ? *Sha1* (Sha1coin [SHA], Yaycoin [YAY])
-
-Not working currently:
-* *Groestl* - for Myriadcoin
-* *Keccak* - for eCoin & Copperlark
-* *Hefty1* (Heavycoin [HVC])
+* ✓ __NIST5__ (Talkcoin [TAC])
+* ✓ __Keccak__ (Maxcoin [MAX], SmartCash [SMART], CreativeCoin [CREA])
+* ✓ __Blake__ (Blakecoin [BLC], Photon [PHO])
+* ✓ __Neoscrypt__ (Feathercoin [FTC], GoByte [GBX], and other Neoscrypt coins)
+* ✓ __Skein__ (Skeincoin [SKC], Digibyte-Skein [DGB])
+* ✓ __Groestl__ (Groestlcoin [GRS], Digibyte-Groestl [DGB])
+* ✓ __Fugue__ (Fuguecoin [FC])
+* ✓ __Qubit__ (Qubitcoin [Q2C], Digibyte-Qubit [DGB])
+* ✓ __SHAvite-3__ (INKcoin [INK])
+* ✓ __SHA1__ (Sha1coin [SHA])
+* ✓ __Hefty1__ (Heavycoin [HVC] - limited support)
 
 
 Requirements
