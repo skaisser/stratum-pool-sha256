@@ -3,4 +3,6 @@ node_modules/
 npm-debug.log
 *.swp
 .vscode/
+coverage/
+*.log
 CLAUDE.md
