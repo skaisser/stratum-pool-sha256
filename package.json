@@ -1,7 +1,7 @@
 {
-    "name": "stratum-pool",
-    "version": "0.1.9",
-    "description": "High performance Stratum poolserver in Node.js",
+    "name": "stratum-pool-sha256",
+    "version": "2.0.0",
+    "description": "High performance SHA-256 Stratum poolserver in Node.js - zero dependencies, pure JavaScript",
     "keywords": [
         "stratum",
         "mining",
@@ -9,12 +9,17 @@
         "server",
         "poolserver",
         "bitcoin",
-        "litecoin",
-        "scrypt"
+        "bitcoincash",
+        "sha256",
+        "asicboost",
+        "bigint",
+        "bch",
+        "btc",
+        "zero-dependencies"
     ],
-    "homepage": "https://github.com/zone117x/node-stratum-pool",
+    "homepage": "https://github.com/skaisser/node-stratum-pool",
     "bugs": {
-        "url": "https://github.com/zone117x/node-stratum-pool/issues"
+        "url": "https://github.com/skaisser/node-stratum-pool/issues"
     },
     "license": "GPL-2.0",
     "author": "Matthew Little",
@@ -27,11 +32,18 @@
         "type": "git",
         "url": "https://github.com/zone117x/node-stratum-pool.git"
     },
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage"
+    },
     "dependencies": {
-        "multi-hashing": "https://github.com/skaisser/node-multi-hashing.git",
         "bs58": "^5.0.0",
         "bchaddrjs": "^0.5.2",
         "async": "^3.2.5"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
     },
     "engines": {
         "node": ">=18.0.0"
