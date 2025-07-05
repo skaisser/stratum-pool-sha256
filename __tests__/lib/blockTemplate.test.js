@@ -112,10 +112,10 @@ describe('BlockTemplate', () => {
                 null
             );
 
-            expect(template.generation).toBeDefined();
-            expect(template.generation).toHaveLength(2);
-            expect(template.generation[0]).toBeInstanceOf(Buffer);
-            expect(template.generation[1]).toBeInstanceOf(Buffer);
+            expect(template.generationTransaction).toBeDefined();
+            expect(template.generationTransaction).toHaveLength(2);
+            expect(template.generationTransaction[0]).toBeInstanceOf(Buffer);
+            expect(template.generationTransaction[1]).toBeInstanceOf(Buffer);
         });
     });
 
@@ -186,8 +186,8 @@ describe('BlockTemplate', () => {
             expect(params).toBeInstanceOf(Array);
             expect(params[0]).toBe('6'); // jobId
             expect(params[1]).toBe(template.prevHashReversed);
-            expect(params[2]).toBe(template.generation[0].toString('hex'));
-            expect(params[3]).toBe(template.generation[1].toString('hex'));
+            expect(params[2]).toBe(template.generationTransaction[0].toString('hex'));
+            expect(params[3]).toBe(template.generationTransaction[1].toString('hex'));
             expect(params[4]).toBeInstanceOf(Array); // merkle branches
             expect(params[5]).toBe(rpcData.version.toString(16));
             expect(params[6]).toBe(rpcData.bits);

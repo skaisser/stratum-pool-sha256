@@ -2,17 +2,53 @@ const JobManager = require('../../lib/jobManager');
 const util = require('../../lib/util');
 
 // Mock dependencies
-jest.mock('../../lib/blockTemplate');
+jest.mock('../../lib/blockTemplate', () => {
+    return jest.fn().mockImplementation((jobId, rpcData, poolAddressScript, extraNoncePlaceholder, reward, txMessages, recipients) => {
+        const submits = new Set();
+        return {
+            jobId: jobId,
+            rpcData: {...rpcData, version: rpcData.version || 536870912},
+            target: {
+                ge: jest.fn().mockReturnValue(false),
+                toString: jest.fn((base) => base === 16 ? 'ffff0000000000000000000000000000000000000000000000000000' : '115792089237316195423570985008687907853269984665640564039457584007913129639935')
+            },
+            difficulty: 16,
+            prevHashReversed: '00000000000000000001234567890abcdef1234567890abcdef1234567890abc',
+            generationTransaction: [Buffer.from('0100', 'hex'), Buffer.from('0200', 'hex')],
+            merkleTree: {
+                withFirst: jest.fn().mockReturnValue(Buffer.from('00', 'hex'))
+            },
+            transactions: [],
+            serializeCoinbase: jest.fn().mockReturnValue(Buffer.alloc(100)),
+            serializeHeader: jest.fn().mockReturnValue(Buffer.alloc(80)),
+            serializeBlock: jest.fn().mockReturnValue(Buffer.alloc(200)),
+            registerSubmit: jest.fn((en1, en2, ntime, nonce) => {
+                const key = en1 + en2 + ntime + nonce;
+                if (submits.has(key)) {
+                    return false;
+                }
+                submits.add(key);
+                return true;
+            }),
+            getJobParams: jest.fn().mockReturnValue(['jobId', 'prevhash', 'coinb1', 'coinb2', [], 'version', 'bits', 'time', true])
+        };
+    });
+});
 jest.mock('../../lib/bignum-compat', () => ({
-    fromBuffer: (buffer) => ({
-        toNumber: () => parseInt(buffer.toString('hex'), 16),
-        toString: () => buffer.toString('hex'),
-        mul: function(other) { return this; },
-        div: function(other) { return this; },
-        lt: function(other) { return false; },
-        le: function(other) { return true; },
-        ge: function(other) { return true; }
-    }),
+    fromBuffer: (buffer) => {
+        const hexValue = buffer.toString('hex');
+        const bigIntValue = BigInt('0x' + hexValue);
+        return {
+            value: bigIntValue,  // Add the value property for BigInt access
+            toNumber: () => parseInt(hexValue, 16),
+            toString: (base) => base === 16 ? hexValue : bigIntValue.toString(),
+            mul: function(other) { return this; },
+            div: function(other) { return this; },
+            lt: function(other) { return false; },
+            le: function(other) { return true; },
+            ge: function(other) { return true; }
+        };
+    },
     __esModule: true,
     default: (num) => ({
         toNumber: () => num,
@@ -65,6 +101,7 @@ describe('JobManager', () => {
                 mutable: ['time', 'transactions', 'prevblock'],
                 noncerange: '00000000ffffffff',
                 sizelimit: 1000000,
+                version: 536870912,
                 coinbaseaux: {
                     flags: ''
                 }
@@ -96,6 +133,7 @@ describe('JobManager', () => {
                 mutable: ['time', 'transactions', 'prevblock'],
                 noncerange: '00000000ffffffff',
                 sizelimit: 1000000,
+                version: 536870912,
                 coinbaseaux: {
                     flags: ''
                 }
@@ -267,6 +305,11 @@ describe('JobManager', () => {
                 bits: '1d00ffff',
                 target: '00000000ffff0000000000000000000000000000000000000000000000000000',
                 curtime: Math.floor(Date.now() / 1000),
+                version: 536870912,
+                mintime: Math.floor(Date.now() / 1000) - 600,
+                mutable: ['time', 'transactions', 'prevblock'],
+                noncerange: '00000000ffffffff',
+                sizelimit: 1000000,
                 coinbaseaux: {
                     flags: ''
                 }
