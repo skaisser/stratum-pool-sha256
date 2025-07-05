@@ -14,7 +14,7 @@ This is a **complete modernization** of the original node-stratum-pool, specific
 
 ASICBoost is a mining optimization that allows miners to find blocks ~20% more efficiently by rolling the version bits in the block header. This implementation supports:
 
-- **Full BIP320 compliance** - Industry standard version rolling
+- **Stratum extensions** - Industry standard version rolling (BIP 310)
 - **Version mask**: `0x1fffe000` - Compatible with all major ASICs
 - **Version range**: `0x20000000` to `0x3FFFFFFF`
 - **Extended mining.submit** - 6-parameter support for version submission
@@ -157,7 +157,7 @@ ports: {
 
 - ✅ **NiceHash Extranonce** - Full extranonce.subscribe support
 - ✅ **MRR Compatibility** - Enhanced share debugging
-- ✅ **Version Rolling** - BIP320 compliant implementation
+- ✅ **Version Rolling** - Stratum extension compliant
 - ✅ **Zero Vulnerabilities** - All dependencies updated
 - ✅ **Pure JavaScript** - No compilation needed
 - ✅ **BigInt Precision** - Accurate difficulty calculations
