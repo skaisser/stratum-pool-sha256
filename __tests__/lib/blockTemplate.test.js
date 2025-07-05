@@ -13,6 +13,14 @@ jest.mock('multi-hashing', () => ({
     }
 }));
 
+// Need to mock transactions module as well
+jest.mock('../../lib/transactions', () => ({
+    CreateGeneration: jest.fn(() => [
+        Buffer.from('0100000001', 'hex'), // mock p1
+        Buffer.from('0200000002', 'hex')  // mock p2
+    ])
+}));
+
 describe('BlockTemplate', () => {
     let rpcData;
     let poolAddressScript;
@@ -23,7 +31,7 @@ describe('BlockTemplate', () => {
         rpcData = {
             height: 700000,
             version: 536870912,
-            previousblockhash: '00000000000000000001234567890abcdef1234567890abcdef1234567890ab',
+            previousblockhash: '00000000000000000001234567890abcdef1234567890abcdef1234567890abc',
             transactions: [],
             coinbaseaux: {
                 flags: ''

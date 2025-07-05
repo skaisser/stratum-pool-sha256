@@ -72,7 +72,11 @@ describe('transactions', () => {
             
             recipients = [{
                 percent: 0.01, // 1%
-                script: util.addressToScript('1RecipientAddress1234567890123456')
+                script: Buffer.concat([
+                    Buffer.from([0x76, 0xa9, 0x14]),
+                    Buffer.alloc(20),
+                    Buffer.from([0x88, 0xac])
+                ])
             }];
 
             const generation = transactions.CreateGeneration(
@@ -181,11 +185,19 @@ describe('transactions', () => {
             recipients = [
                 {
                     percent: 0.01, // 1%
-                    script: util.addressToScript('1Recipient1Address123456789012345')
+                    script: Buffer.concat([
+                        Buffer.from([0x76, 0xa9, 0x14]),
+                        Buffer.alloc(20, 1),
+                        Buffer.from([0x88, 0xac])
+                    ])
                 },
                 {
                     percent: 0.02, // 2%
-                    script: util.addressToScript('1Recipient2Address123456789012345')
+                    script: Buffer.concat([
+                        Buffer.from([0x76, 0xa9, 0x14]),
+                        Buffer.alloc(20, 2),
+                        Buffer.from([0x88, 0xac])
+                    ])
                 }
             ];
 
