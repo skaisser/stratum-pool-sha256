@@ -27,11 +27,19 @@
         "type": "git",
         "url": "https://github.com/zone117x/node-stratum-pool.git"
     },
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage"
+    },
     "dependencies": {
         "multi-hashing": "https://github.com/skaisser/node-multi-hashing.git",
         "bs58": "^5.0.0",
         "bchaddrjs": "^0.5.2",
         "async": "^3.2.5"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
     },
     "engines": {
         "node": ">=18.0.0"
