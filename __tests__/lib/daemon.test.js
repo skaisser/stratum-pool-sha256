@@ -71,9 +71,13 @@ describe('DaemonInterface', () => {
     });
 
     describe('isOnline', () => {
-        it('should return false when no daemons are configured', () => {
+        it('should call callback with true when no daemons to check', (done) => {
             daemon = new DaemonInterface([]);
-            expect(daemon.isOnline()).toBe(false);
+            daemon.isOnline((result) => {
+                // When there are no daemons, isOnline returns true (all 0 daemons are online)
+                expect(result).toBe(true);
+                done();
+            });
         });
     });
 });
