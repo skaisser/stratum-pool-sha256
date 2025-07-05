@@ -22,15 +22,16 @@
         "url": "https://github.com/skaisser/node-stratum-pool/issues"
     },
     "license": "GPL-2.0",
-    "author": "Matthew Little",
+    "author": "Shirleyson Kaisser <skaisser@gmail.com>",
     "contributors": [
+        "Matthew Little (original author)",
         "vekexasia",
         "TheSeven"
     ],
     "main": "lib/index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/zone117x/node-stratum-pool.git"
+        "url": "https://github.com/skaisser/node-stratum-pool.git"
     },
     "scripts": {
         "test": "jest",
