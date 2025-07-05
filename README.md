@@ -244,7 +244,7 @@ var myCoin = {
     "asicboost": true,      // Enable ASICBoost support for version rolling
     "txMessages": false,    // Optional - defaults to false
 
-    /* Magic value only required for setting up p2p block notifications. 
+    /* Magic value only required for setting up p2p block notifications.
        Found in the daemon source code as the pchMessageStart variable. */
     "peerMagic": "e3e1f3e8",        // BCH mainnet magic
     "peerMagicTestnet": "f4e5f3f4"  // BCH testnet magic
