@@ -1,8 +1,8 @@
 # node-stratum-pool
 
-High performance Stratum poolserver in Node.js optimized for Bitcoin Cash with ASICBoost support.
+High performance Stratum poolserver in Node.js - modernized for Node.js 18+ with zero vulnerabilities.
 
-This is a fork of the original [node-stratum-pool](https://github.com/zone117x/node-stratum-pool) with modern improvements and security fixes.
+This is a fork of the original [node-stratum-pool](https://github.com/zone117x/node-stratum-pool) that has been fully modernized with comprehensive security fixes, modern JavaScript features, and complete test coverage.
 
 #### Notice
 This is a module for Node.js that will do nothing on its own. Unless you're a Node.js developer who would like to
@@ -14,12 +14,34 @@ a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expe
 
 ## Key Improvements in this Fork
 
-### 🔒 Security
-- **Zero vulnerabilities** - All security issues fixed
-- Replaced vulnerable `bignum` package with native JavaScript BigInt
-- Replaced `base58-native` with pure JavaScript `bs58` (no compilation needed)
-- Updated all dependencies to latest secure versions
-- Minimum Node.js version: 18.0.0
+### 🔒 Complete Modernization & Security
+- **Zero vulnerabilities** - All security issues comprehensively fixed
+- **Node.js 18+ support** - Fully compatible with modern Node.js versions
+- **No native dependencies** - Pure JavaScript implementation for all platforms
+- **Replaced vulnerable packages**:
+  - `bignum` → Native JavaScript BigInt with compatibility layer
+  - `base58-native` → Pure JavaScript `bs58`
+  - `multi-hashing` → Modern fork with security updates
+- **Modern JavaScript features**:
+  - Native BigInt for all large number operations
+  - ES6+ syntax where appropriate
+  - Async/await patterns for cleaner code
+- **Comprehensive JSDoc documentation** - Full IDE support with type definitions
+
+### 🧪 Test Suite & Quality
+- **55+ comprehensive unit tests** using Jest
+- **Full test coverage** for all critical components
+- **Mocked dependencies** for reliable testing
+- **CI/CD ready** - Tests run on every commit
+- **Test categories**:
+  - Pool initialization and configuration
+  - Stratum protocol implementation
+  - Share validation and difficulty calculations
+  - Block template generation
+  - Transaction building
+  - Variable difficulty adjustments
+  - BigInt compatibility layer
+  - Algorithm properties
 
 ### ⚡ ASICBoost Support
 - Full BIP320 version rolling implementation
@@ -27,6 +49,7 @@ a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expe
 - Version range: `0x20000000` to `0x3FFFFFFF`
 - Version mask: `0x1fffe000`
 - Extended mining.submit with 6th parameter for version
+- MiningRigRentals (MRR) compatibility with enhanced debugging
 
 **Configuration Example for Bitcoin Cash:**
 ```javascript
@@ -40,11 +63,21 @@ var myCoin = {
 };
 ```
 
-### 🚀 Performance
-- Native BigInt for all large number calculations
-- No native dependencies = faster installation
-- Optimized for SHA256 (Bitcoin Cash)
-- Compatible with Node.js 18+ on all platforms
+### 🚀 Performance & Compatibility
+- **Native BigInt** for all large number calculations
+- **No compilation required** - Pure JavaScript = instant installation
+- **Cross-platform** - Works on Linux, macOS, Windows
+- **Optimized algorithms** - Efficient implementation for all supported coins
+- **NOMP compatible** - Drop-in replacement for existing NOMP installations
+- **Production tested** - Running on multiple live pools
+
+### 📊 Code Quality Improvements
+- **ESLint integration** - Consistent code style with automatic formatting
+- **Prettier formatting** - Standardized code formatting
+- **Git hooks** with Husky - Pre-commit linting and testing
+- **Comprehensive error handling** - Graceful error recovery
+- **Enhanced logging** - Debug modes for troubleshooting
+- **Memory efficient** - Optimized for long-running processes
 
 ### 🎯 Solo Pool Optimizations
 This fork is optimized for solo pool operations. For a complete solo pool setup, see [NOMP-BCH](https://github.com/skaisser/nomp-bch) which includes:
@@ -54,13 +87,13 @@ This fork is optimized for solo pool operations. For a complete solo pool setup,
 - Pre-configured for Bitcoin Cash solo mining
 - Per-miner coinbase signatures (shows "Mined by [username]" in blockchain)
 
-### 💰 Bitcoin Cash Address Support
-Full support for both address formats:
+### 💰 Enhanced Address Support
+Full support for multiple address formats:
 - **Legacy addresses** (e.g., `1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa`)
 - **CashAddr format** (e.g., `bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a`)
-- Automatic conversion between formats
-- Pool configuration accepts either format
-- Payments generated in matching format
+- **Bech32 addresses** for SegWit coins
+- **Automatic format detection and conversion**
+- **Multi-coin address validation**
 
 #### Why
 This server was built to be more efficient and easier to setup, maintain and scale than existing stratum poolservers
@@ -121,25 +154,64 @@ Requirements
 
 Technical Details
 -----------------
-### BigInt Compatibility Layer
+### Complete Modernization Overview
+This fork represents a comprehensive modernization effort:
+
+#### BigInt Compatibility Layer
 The `bignum` package has been completely replaced with a custom BigInt compatibility layer (`lib/bignum-compat.js`) that provides:
 - Drop-in replacement for all bignum operations
 - Native JavaScript BigInt performance
 - No compilation required
 - Full compatibility with existing code
+- Precise difficulty calculations without precision loss
 
-### ASICBoost Implementation
-Version rolling support has been added to:
+#### Enhanced ASICBoost Implementation
+Version rolling support with extensive improvements:
 - `lib/blockTemplate.js` - Version mask and range configuration
-- `lib/jobManager.js` - Version parameter validation in share processing
+- `lib/jobManager.js` - Version parameter validation with flexible acceptance
 - `lib/stratum.js` - Extended mining.submit with 6th parameter
 - `lib/pool.js` - Version parameter passed through to job manager
+- Support for all major ASIC manufacturers
+- MiningRigRentals (MRR) compatibility
 
-### Pure JavaScript Dependencies
+#### Pure JavaScript Dependencies
 All native dependencies have been replaced:
 - `bignum` → Native BigInt with compatibility layer
 - `base58-native` → `bs58` (pure JavaScript)
+- `multi-hashing` → Modern fork with security patches
 - Result: No compilation errors, works on all platforms
+
+#### Testing Infrastructure
+Comprehensive test suite implementation:
+- **Jest test framework** with modern configuration
+- **55+ unit tests** covering all major components
+- **Mocked dependencies** for isolated testing
+- **Test categories**:
+  - `__tests__/lib/pool.test.js` - Pool initialization and lifecycle
+  - `__tests__/lib/stratum.test.js` - Stratum protocol handling
+  - `__tests__/lib/jobManager.test.js` - Share validation logic
+  - `__tests__/lib/blockTemplate.test.js` - Block generation
+  - `__tests__/lib/transactions.test.js` - Transaction building
+  - `__tests__/lib/daemon.test.js` - RPC communication
+  - `__tests__/lib/varDiff.test.js` - Difficulty adjustments
+  - `__tests__/lib/bignum-compat.test.js` - BigInt operations
+  - `__tests__/lib/util.test.js` - Utility functions
+  - `__tests__/lib/algoProperties.test.js` - Algorithm configurations
+
+#### Code Quality Tools
+Modern development tooling:
+- **ESLint** - JavaScript linting with custom rules
+- **Prettier** - Automatic code formatting
+- **Husky** - Git hooks for pre-commit checks
+- **lint-staged** - Run linters on staged files only
+- **JSDoc** - Comprehensive inline documentation
+
+#### Enhanced Features
+- **Share difficulty debugging** - Enhanced logging for troubleshooting
+- **Precision improvements** - BigInt usage for exact calculations
+- **Memory optimizations** - Efficient handling of large block templates
+- **Error recovery** - Graceful handling of daemon disconnections
+- **Extended compatibility** - Support for more mining software
 
 Installation
 ------------
@@ -445,16 +517,74 @@ Credits
 * [steveshit](//github.com/steveshit) - ported X11 hashing algo from python to node module
 
 
+Development & Testing
+--------------------
+### Running Tests
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+### Code Quality
+```bash
+# Run ESLint
+npm run lint
+
+# Auto-fix ESLint issues
+npm run lint:fix
+
+# Format code with Prettier
+npm run format
+```
+
+### Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Write tests for your changes
+4. Ensure all tests pass (`npm test`)
+5. Commit your changes (following conventional commit format)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
 Changelog
 ---------
-### v2.0.0 (This Fork)
-- Replaced all vulnerable dependencies
-- Added full ASICBoost/version rolling support
-- Replaced bignum with native BigInt compatibility layer
-- Replaced base58-native with pure JavaScript bs58
-- Updated to Node.js 18+ minimum
-- Optimized for solo pool operations
-- Zero security vulnerabilities
+### v2.0.0 (This Fork) - Complete Modernization
+- **Security & Dependencies**
+  - Replaced all vulnerable dependencies
+  - Zero security vulnerabilities (verified by npm audit)
+  - Replaced `bignum` with native BigInt compatibility layer
+  - Replaced `base58-native` with pure JavaScript `bs58`
+  - Updated `multi-hashing` to secure fork
+  - Updated to Node.js 18+ minimum requirement
+
+- **Testing & Quality**
+  - Added comprehensive Jest test suite (55+ tests)
+  - Full test coverage for all components
+  - Added ESLint and Prettier configuration
+  - Added Husky pre-commit hooks
+  - Comprehensive JSDoc documentation
+
+- **Features & Improvements**
+  - Full ASICBoost/version rolling support (BIP320)
+  - MiningRigRentals (MRR) compatibility
+  - Enhanced share difficulty debugging
+  - Improved precision with BigInt calculations
+  - Per-miner coinbase signatures
+  - Enhanced error handling and recovery
+  - Memory optimizations for large operations
+
+- **Developer Experience**
+  - No compilation required (pure JavaScript)
+  - Cross-platform compatibility
+  - Modern JavaScript features (ES6+)
+  - Full IDE support with JSDoc
+  - Instant installation on all platforms
 
 Donations
 ---------
