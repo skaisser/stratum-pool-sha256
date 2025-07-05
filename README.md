@@ -1,8 +1,8 @@
-# node-stratum-pool
+# node-stratum-pool-sha256
 
-High performance Stratum poolserver in Node.js - modernized for Node.js 18+ with zero vulnerabilities.
+High performance SHA-256 Stratum poolserver in Node.js - modernized for Node.js 18+ with zero vulnerabilities.
 
-This is a fork of the original [node-stratum-pool](https://github.com/zone117x/node-stratum-pool) that has been fully modernized with comprehensive security fixes, modern JavaScript features, and complete test coverage.
+This is a SHA-256 optimized fork of the original [node-stratum-pool](https://github.com/zone117x/node-stratum-pool) that has been fully modernized with comprehensive security fixes, modern JavaScript features, complete test coverage, and zero native dependencies.
 
 #### Notice
 This is a module for Node.js that will do nothing on its own. Unless you're a Node.js developer who would like to
@@ -16,16 +16,17 @@ a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expe
 
 ### 🔒 Complete Modernization & Security
 - **Zero vulnerabilities** - All security issues comprehensively fixed
+- **Zero native dependencies** - Pure JavaScript implementation
+- **SHA-256 only** - Optimized specifically for Bitcoin/Bitcoin Cash mining
 - **Node.js 18+ support** - Fully compatible with modern Node.js versions
-- **No native dependencies** - Pure JavaScript implementation for all platforms
 - **Replaced vulnerable packages**:
   - `bignum` → Native JavaScript BigInt with compatibility layer
   - `base58-native` → Pure JavaScript `bs58`
-  - `multi-hashing` → Modern fork with security updates
+  - `multi-hashing` → Removed (uses Node.js built-in crypto)
 - **Modern JavaScript features**:
   - Native BigInt for all large number operations
   - ES6+ syntax where appropriate
-  - Async/await patterns for cleaner code
+  - Built-in crypto module for SHA-256
 - **Comprehensive JSDoc documentation** - Full IDE support with type definitions
 
 ### 🧪 Test Suite & Quality
@@ -51,8 +52,9 @@ a drop-in-replacement for [python-stratum-mining](https://github.com/Crypto-Expe
 - Extended mining.submit with 6th parameter for version
 - MiningRigRentals (MRR) compatibility with enhanced debugging
 
-**Configuration Example for Bitcoin Cash:**
+**Configuration Example:**
 ```javascript
+// Bitcoin Cash with ASICBoost
 var myCoin = {
     "name": "BitcoinCash",
     "symbol": "BCH",
@@ -61,15 +63,25 @@ var myCoin = {
     "peerMagic": "e3e1f3e8",
     "peerMagicTestnet": "f4e5f3f4"
 };
+
+// Bitcoin (without ASICBoost)
+var myCoin = {
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "algorithm": "sha256",
+    "asicboost": false,
+    "peerMagic": "f9beb4d9",
+    "peerMagicTestnet": "0b110907"
+};
 ```
 
 ### 🚀 Performance & Compatibility
 - **Native BigInt** for all large number calculations
 - **No compilation required** - Pure JavaScript = instant installation
 - **Cross-platform** - Works on Linux, macOS, Windows
-- **Optimized algorithms** - Efficient implementation for all supported coins
-- **NOMP compatible** - Drop-in replacement for existing NOMP installations
-- **Production tested** - Running on multiple live pools
+- **SHA-256 optimized** - Focused implementation for Bitcoin/BCH mining
+- **NOMP compatible** - Drop-in replacement for SHA-256 coins in NOMP
+- **Production tested** - Running on multiple live Bitcoin Cash pools
 
 ### 📊 Code Quality Improvements
 - **ESLint integration** - Consistent code style with automatic formatting
@@ -119,31 +131,13 @@ Features
 * When started with a coin deamon that hasn't finished syncing to the network it shows the blockchain download progress and initializes once synced
 * __ASICBoost__ support for version rolling (up to 20% efficiency improvement)
 
-#### Hashing algorithms supported:
+#### Supported Algorithms:
+
+This fork supports **SHA-256 only**:
 * ✓ __SHA256__ (Bitcoin [BTC], Bitcoin Cash [BCH], Bitcoin SV [BSV], Namecoin [NMC], Peercoin [PPC], and other SHA256 coins)
-* ✓ __SHA256 with ASICBoost__ (Bitcoin Cash [BCH], Bitcoin [BTC] - with version rolling support)
-* ✓ __Scrypt__ (Litecoin [LTC], Dogecoin [DOGE], Feathercoin [FTC], and other Scrypt coins)
-* ✓ __Scrypt-OG__ (Aiden [ADN] and other low N-factor Scrypt coins)
-* ✓ __Scrypt-Jane__ (YaCoin [YAC], CopperBars [CPR], Pennies [CENT], Tickets [TIX])
-* ✓ __Scrypt-N__ (Vertcoin [VTC], Execoin [EXE], and other adaptive N-factor coins)
-* ✓ __X11__ (Dash [DASH], formerly Darkcoin)
-* ✓ __X13__ (MaruCoin [MARU], BoostCoin [BOST])
-* ✓ __X15__ (HTML5Coin [HTML5])
-* ✓ __X16R__ (Ravencoin [RVN])
-* ✓ __X16RV2__ (Ravencoin [RVN] - new algorithm version)
-* ✓ __C11__ (Chaincoin [CHC])
-* ✓ __Quark__ (Quarkcoin [QRK])
-* ✓ __NIST5__ (Talkcoin [TAC])
-* ✓ __Keccak__ (Maxcoin [MAX], SmartCash [SMART], CreativeCoin [CREA])
-* ✓ __Blake__ (Blakecoin [BLC], Photon [PHO])
-* ✓ __Neoscrypt__ (Feathercoin [FTC], GoByte [GBX], and other Neoscrypt coins)
-* ✓ __Skein__ (Skeincoin [SKC], Digibyte-Skein [DGB])
-* ✓ __Groestl__ (Groestlcoin [GRS], Digibyte-Groestl [DGB])
-* ✓ __Fugue__ (Fuguecoin [FC])
-* ✓ __Qubit__ (Qubitcoin [Q2C], Digibyte-Qubit [DGB])
-* ✓ __SHAvite-3__ (INKcoin [INK])
-* ✓ __SHA1__ (Sha1coin [SHA])
-* ✓ __Hefty1__ (Heavycoin [HVC] - limited support)
+* ✓ __SHA256 with ASICBoost__ (Bitcoin Cash [BCH], Bitcoin [BTC] - with BIP320 version rolling support)
+
+All other algorithms have been removed to maintain zero native dependencies and ensure cross-platform compatibility.
 
 
 Requirements
@@ -174,11 +168,11 @@ Version rolling support with extensive improvements:
 - MiningRigRentals (MRR) compatibility
 
 #### Pure JavaScript Dependencies
-All native dependencies have been replaced:
+All native dependencies have been completely removed:
 - `bignum` → Native BigInt with compatibility layer
 - `base58-native` → `bs58` (pure JavaScript)
-- `multi-hashing` → Modern fork with security patches
-- Result: No compilation errors, works on all platforms
+- `multi-hashing` → **Removed** (SHA-256 uses Node.js built-in crypto)
+- Result: Zero compilation, instant installation on all platforms
 
 #### Testing Infrastructure
 Comprehensive test suite implementation:
@@ -239,72 +233,40 @@ npm update
 
 Create the configuration for your coin:
 
-Possible options for `algorithm`: *sha256, scrypt, scrypt-jane, scrypt-n, quark, x11, keccak, blake,
-skein, groestl, fugue, shavite3, hefty1, qubit, or sha1*.
+This fork supports `algorithm`: **sha256** only.
 
 ```javascript
+// Bitcoin Cash Configuration
 var myCoin = {
-    "name": "Dogecoin",
-    "symbol": "DOGE",
-    "algorithm": "scrypt",
-    "nValue": 1024, //optional - defaults to 1024
-    "rValue": 1, //optional - defaults to 1
-    "txMessages": false, //optional - defaults to false,
+    "name": "BitcoinCash",
+    "symbol": "BCH",
+    "algorithm": "sha256",
+    "asicboost": true,      // Enable ASICBoost support for version rolling
+    "txMessages": false,    // Optional - defaults to false
 
-    /* Magic value only required for setting up p2p block notifications. It is found in the daemon
-       source code as the pchMessageStart variable.
-       For example, litecoin mainnet magic: http://git.io/Bi8YFw
-       And for litecoin testnet magic: http://git.io/NXBYJA */
-     "peerMagic": "fbc0b6db" //optional
-     "peerMagicTestnet": "fcc1b7dc" //optional
+    /* Magic value only required for setting up p2p block notifications. 
+       Found in the daemon source code as the pchMessageStart variable. */
+    "peerMagic": "e3e1f3e8",        // BCH mainnet magic
+    "peerMagicTestnet": "f4e5f3f4"  // BCH testnet magic
 };
-```
 
-If you are using the `scrypt-jane` algorithm there are additional configurations:
-
-```javascript
+// Bitcoin Configuration
 var myCoin = {
-    "name": "Freecoin",
-    "symbol": "FEC",
-    "algorithm": "scrypt-jane",
-    "chainStartTime": 1375801200, //defaults to 1367991200 (YACoin) if not used
-    "nMin": 6, //defaults to 4 if not used
-    "nMax": 32 //defaults to 30 if not used
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "algorithm": "sha256",
+    "asicboost": false,     // Bitcoin Core doesn't support ASICBoost by default
+    "txMessages": false,
+    "peerMagic": "f9beb4d9",
+    "peerMagicTestnet": "0b110907"
 };
-```
 
-If you are using the `scrypt-n` algorithm there is an additional configuration:
-```javascript
+// Other SHA-256 coins follow the same pattern
 var myCoin = {
-    "name": "Execoin",
-    "symbol": "EXE",
-    "algorithm": "scrypt-n",
-    /* This defaults to Vertcoin's timetable if not used. It is required for scrypt-n coins that
-       have modified their N-factor timetable to be different than Vertcoin's. */
-    "timeTable": {
-        "2048": 1390959880,
-        "4096": 1438295269,
-        "8192": 1485630658,
-        "16384": 1532966047,
-        "32768": 1580301436,
-        "65536": 1627636825,
-        "131072": 1674972214,
-        "262144": 1722307603
-    }
-};
-```
-
-If you are using the `keccak` algorithm there are additional configurations *(The rare `normalHashing` keccak coins
-such as Copperlark and eCoin don't appear to work yet - only the popular ones like Maxcoin are)*:
-```javascript
-var myCoin = {
-    "name": "eCoin",
-    "symbol": "ECN",
-    "algorithm": "keccak",
-
-    /* This is not required and set to false by default. Some coins such as Copperlark and eCoin
-       require it to be set to true. Maxcoin and most others are false. */
-    "normalHashing": true
+    "name": "Namecoin",
+    "symbol": "NMC",
+    "algorithm": "sha256",
+    "peerMagic": "f9beb4fe"
 };
 ```
 
@@ -553,14 +515,19 @@ npm run format
 
 Changelog
 ---------
-### v2.0.0 (This Fork) - Complete Modernization
+### v2.0.0 (This Fork) - SHA-256 Focused Modernization
+- **Architecture Changes**
+  - **SHA-256 only** - Removed all other algorithms for zero dependencies
+  - Removed `multi-hashing` dependency completely
+  - Uses Node.js built-in crypto module for SHA-256
+  - Truly zero native dependencies
+
 - **Security & Dependencies**
-  - Replaced all vulnerable dependencies
   - Zero security vulnerabilities (verified by npm audit)
   - Replaced `bignum` with native BigInt compatibility layer
   - Replaced `base58-native` with pure JavaScript `bs58`
-  - Updated `multi-hashing` to secure fork
   - Updated to Node.js 18+ minimum requirement
+  - No compilation required on any platform
 
 - **Testing & Quality**
   - Added comprehensive Jest test suite (55+ tests)
@@ -579,11 +546,11 @@ Changelog
   - Memory optimizations for large operations
 
 - **Developer Experience**
-  - No compilation required (pure JavaScript)
-  - Cross-platform compatibility
+  - Pure JavaScript - no compilation ever
+  - Instant npm install on all platforms
+  - Cross-platform compatibility (Linux, macOS, Windows)
   - Modern JavaScript features (ES6+)
   - Full IDE support with JSDoc
-  - Instant installation on all platforms
 
 Donations
 ---------

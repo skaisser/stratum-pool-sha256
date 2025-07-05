@@ -1,7 +1,7 @@
 {
-    "name": "stratum-pool",
+    "name": "stratum-pool-sha256",
     "version": "2.0.0",
-    "description": "High performance Stratum poolserver in Node.js - modernized with zero vulnerabilities",
+    "description": "High performance SHA-256 Stratum poolserver in Node.js - zero dependencies, pure JavaScript",
     "keywords": [
         "stratum",
         "mining",
@@ -10,11 +10,12 @@
         "poolserver",
         "bitcoin",
         "bitcoincash",
-        "litecoin",
-        "scrypt",
         "sha256",
         "asicboost",
-        "bigint"
+        "bigint",
+        "bch",
+        "btc",
+        "zero-dependencies"
     ],
     "homepage": "https://github.com/skaisser/node-stratum-pool",
     "bugs": {

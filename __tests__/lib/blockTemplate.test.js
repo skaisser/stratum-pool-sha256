@@ -1,19 +1,6 @@
 const BlockTemplate = require('../../lib/blockTemplate');
 
-// Mock multi-hashing module
-jest.mock('multi-hashing', () => ({
-    sha256: (buffer) => {
-        const crypto = require('crypto');
-        return crypto.createHash('sha256').update(buffer).digest();
-    },
-    sha256d: (buffer) => {
-        const crypto = require('crypto');
-        const hash1 = crypto.createHash('sha256').update(buffer).digest();
-        return crypto.createHash('sha256').update(hash1).digest();
-    }
-}));
-
-// Need to mock transactions module as well
+// Need to mock transactions module
 jest.mock('../../lib/transactions', () => ({
     CreateGeneration: jest.fn(() => [
         Buffer.from('0100000001', 'hex'), // mock p1
