@@ -91,8 +91,22 @@ const pool = Stratum.createPool({
         password: 'rpcpass'
     }]
 }, (ip, port, workerName, password, callback) => {
-    // Accept all miners
-    callback({ error: null, authorized: true, disconnect: false });
+    // Parse difficulty from password (e.g., "d=500000")
+    let difficulty = null;
+    if (password) {
+        const match = password.match(/d=(\d+(?:\.\d+)?)/i);
+        if (match) {
+            difficulty = parseFloat(match[1]);
+        }
+    }
+    
+    // Accept all miners with optional custom difficulty
+    callback({ 
+        error: null, 
+        authorized: true, 
+        disconnect: false,
+        difficulty: difficulty  // Set custom difficulty if provided
+    });
 });
 
 // Monitor ASICBoost shares
@@ -145,6 +159,43 @@ ports: {
     }
 }
 ```
+
+## 💪 Custom Difficulty via Password
+
+Miners can request custom difficulty by including `d=XXX` in their password:
+
+```
+# Miner configuration examples:
+username: myworker
+password: d=500000     # Sets difficulty to 500,000
+
+username: myworker  
+password: x,d=10000000 # Sets difficulty to 10,000,000 (with other params)
+```
+
+The authorization function parses and applies the requested difficulty:
+
+```javascript
+(ip, port, workerName, password, callback) => {
+    // Parse d=XXX from password
+    let difficulty = null;
+    if (password) {
+        const match = password.match(/d=(\d+(?:\.\d+)?)/i);
+        if (match) difficulty = parseFloat(match[1]);
+    }
+    
+    callback({ 
+        error: null, 
+        authorized: true,
+        difficulty: difficulty  // Applied immediately to the miner
+    });
+}
+```
+
+This is especially useful for:
+- **NiceHash/MRR**: Set high fixed difficulty (e.g., `d=500000`)
+- **Large farms**: Reduce bandwidth with higher difficulty
+- **Testing**: Set specific difficulty for debugging
 
 ## 📊 Algorithm Support
 
