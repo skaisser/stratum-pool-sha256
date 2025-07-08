@@ -1,0 +1,142 @@
+{
+  "plan": "Remove BIP 310 Version Rolling While Maintaining ASICBoost Support",
+  "description": "This plan removes strict BIP 310 version mask negotiation while keeping ASICBoost functionality. Miners can still use version rolling but without strict mask enforcement.",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Remove Version Mask Negotiation from Stratum",
+      "file": "lib/stratum.js",
+      "changes": [
+        {
+          "description": "Remove handleConfigure function or simplify it",
+          "action": "Remove lines 300-404 (handleConfigure function)",
+          "alternative": "Replace with simple response that accepts any version-rolling request"
+        },
+        {
+          "description": "Remove versionMask storage on client",
+          "action": "Remove lines 373-374 where versionMask is stored"
+        },
+        {
+          "description": "Remove version mask from client options",
+          "action": "Remove versionMask from StratumClient constructor options"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Simplify Version Validation in Job Manager",
+      "file": "lib/jobManager.js",
+      "changes": [
+        {
+          "description": "Remove BIP 310 version mask validation",
+          "action": "Remove lines 322-372 (version mask validation logic)",
+          "replacement": "Simple version validation: accept any version >= 4"
+        },
+        {
+          "description": "Simplify version parsing",
+          "action": "Replace complex version parsing with simple parseInt(version || job.rpcData.version, 16)"
+        },
+        {
+          "description": "Remove versionMask parameter from processShare",
+          "action": "Remove versionMask from function parameters"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Update Block Template",
+      "file": "lib/blockTemplate.js",
+      "changes": [
+        {
+          "description": "Remove versionMask property",
+          "action": "Remove lines 62-66 (versionMask and version range properties)"
+        },
+        {
+          "description": "Keep version parameter in serializeHeader",
+          "action": "No change needed - ASICBoost still works"
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Update Pool Configuration",
+      "file": "lib/pool.js",
+      "changes": [
+        {
+          "description": "Remove version mask passing to stratum",
+          "action": "Remove versionMask from stratum server options"
+        },
+        {
+          "description": "Remove enforcePoolVersionMask option",
+          "action": "Remove any references to enforcePoolVersionMask"
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "title": "Clean Up NOMP Configuration",
+      "files": ["pool_configs/*.json", "coins/*.json"],
+      "changes": [
+        {
+          "description": "Remove versionMask from coin configs",
+          "action": "Delete versionMask property"
+        },
+        {
+          "description": "Remove enforcePoolVersionMask from pool configs",
+          "action": "Delete enforcePoolVersionMask property"
+        }
+      ]
+    }
+  ],
+  "implementation_example": {
+    "simplified_version_validation": {
+      "description": "Replace complex BIP 310 validation with simple version check",
+      "code": [
+        "// In jobManager.js processShare function",
+        "var versionInt = parseInt(version || job.rpcData.version, 16);",
+        "",
+        "// Simple validation - just check minimum version",
+        "if (versionInt < 0x00000004) {",
+        "    return shareError([20, 'version too low']);",
+        "}",
+        "",
+        "// That's it! No mask validation, no complex checks"
+      ]
+    },
+    "simplified_configure_response": {
+      "description": "Simple mining.configure response without negotiation",
+      "code": [
+        "function handleConfigure(message) {",
+        "    // Always accept version-rolling if requested",
+        "    var supported = {};",
+        "    if (message.params[0].includes('version-rolling')) {",
+        "        supported['version-rolling'] = true;",
+        "    }",
+        "    sendJson({",
+        "        id: message.id,",
+        "        result: supported,",
+        "        error: null",
+        "    });",
+        "}"
+      ]
+    }
+  },
+  "benefits": [
+    "Maintains ASICBoost support - miners can still modify version bits",
+    "Removes complex mask negotiation that confuses miners",
+    "Accepts any version >= 4 (Bitcoin protocol requirement)",
+    "Simpler code, easier to maintain",
+    "Better compatibility with various mining hardware"
+  ],
+  "risks": [
+    "Less strict validation of version values",
+    "Miners could potentially set invalid version bits",
+    "Not fully BIP 310 compliant (but more compatible)"
+  ],
+  "testing": [
+    "Test with ASICBoost-enabled miners",
+    "Verify shares are accepted with different versions",
+    "Ensure block submission still works",
+    "Test with both version-rolling and non-version-rolling miners"
+  ]
+}
