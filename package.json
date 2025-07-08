@@ -1,6 +1,6 @@
 {
     "name": "stratum-pool-sha256",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "High performance SHA-256 Stratum poolserver in Node.js - zero dependencies, pure JavaScript",
     "keywords": [
         "stratum",
