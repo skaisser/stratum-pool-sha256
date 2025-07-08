@@ -17,9 +17,9 @@
         "btc",
         "zero-dependencies"
     ],
-    "homepage": "https://github.com/skaisser/node-stratum-pool",
+    "homepage": "https://github.com/skaisser/stratum-pool-sha256",
     "bugs": {
-        "url": "https://github.com/skaisser/node-stratum-pool/issues"
+        "url": "https://github.com/skaisser/stratum-pool-sha256/issues"
     },
     "license": "MIT",
     "author": "Shirleyson Kaisser <skaisser@gmail.com>",
@@ -29,9 +29,17 @@
         "TheSeven"
     ],
     "main": "lib/index.js",
+    "files": [
+        "lib/",
+        "LICENSE",
+        "README.md"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/skaisser/node-stratum-pool.git"
+        "url": "https://github.com/skaisser/stratum-pool-sha256.git"
     },
     "scripts": {
         "test": "jest",
