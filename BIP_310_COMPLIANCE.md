@@ -53,19 +53,34 @@ const pool = Stratum.createPool({
         // ... other settings
         asicboost: true
     },
-    versionMask: 0x1fffe000,  // Optional: defaults to standard ASICBoost mask
+    versionMask: 0x3fffe000,  // Optional: defaults to 0x3fffe000 for better compatibility
     // ... other options
 });
 ```
 
+### Version Mask Settings
+
+The `versionMask` option controls which bits miners can use for version rolling:
+
+- **Default**: `0x3fffe000` - More permissive mask that supports MiningRigRentals and other rental services
+- **Strict**: `0x1fffe000` - Standard BIP 320 mask (fewer bits available)
+- **Custom**: Any mask can be set based on your pool's requirements
+
+**Important**: The actual mask used for each miner is the intersection of the pool's mask and the miner's requested mask during negotiation.
+
 ## Version Rolling Validation
 
-The implementation now strictly validates version rolling per BIP 310:
+The implementation validates version rolling with improved compatibility:
 
 1. Calculates which bits were changed from the original version
 2. Checks if ALL rolled bits are within the negotiated mask
 3. Rejects shares with bits outside the mask (as required by BIP 310)
 4. Logs successful version rolling for monitoring
+5. **Special handling for version 0x0**: Automatically uses job version when miner submits 0x0
+
+### Important Note on Version Validation
+
+The validation has been updated to be more lenient while still maintaining BIP 310 compliance. Instead of requiring non-masked bits to match exactly, the pool now only validates that changed bits are within the negotiated mask. This fixes compatibility issues with rental services like MiningRigRentals where the job version may contain bits outside the negotiated mask.
 
 ## Backward Compatibility
 
